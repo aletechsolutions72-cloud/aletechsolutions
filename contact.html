@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Ale Tech-solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --glass-bg: rgba(18, 18, 30, 0.7);
+            --glass-border: rgba(0, 255, 255, 0.15);
+            --neon-cyan: #00f0ff;
+            --neon-purple: #b44dff;
+            --neon-pink: #ff2d95;
+            --neon-green: #39ff14;
+            --neon-orange: #ff6b35;
+            --neon-yellow: #ffd700;
+            --neon-red: #ff4444;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0b0;
+            --text-dim: #6a6a7a;
+            --gradient-1: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0d0d18 100%);
+            --gradient-2: linear-gradient(135deg, #00f0ff20, #b44dff20);
+            --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2);
+            --glow-purple: 0 0 20px rgba(180, 77, 255, 0.4), 0 0 40px rgba(180, 77, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: linear-gradient(rgba(0, 240, 255, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.5) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: floatUp 8s infinite;
+            opacity: 0;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .particle:nth-child(even) { background: var(--neon-purple); box-shadow: var(--glow-purple); }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            cursor: pointer;
+        }
+
+        img{
+            width: 90px;
+            height: 90px;
+            margin-left: -30px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--neon-cyan);
+            animation: logoPulse 3s infinite;
+        }
+        .logo-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-cyan);
+            transition: width 0.3s ease;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--neon-cyan);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .btn-nav {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .btn-login {
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .btn-login:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            color: white;
+            margin-left: 0.5rem;
+            box-shadow: 0 0 20px rgba(180, 77, 255, 0.3);
+        }
+
+        .btn-register:hover {
+            box-shadow: 0 0 35px rgba(255, 45, 149, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .page-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title .highlight {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contact Content */
+        .contact-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Contact Info Cards */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+        }
+
+        .info-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateX(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .info-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .info-icon.cyan { background: rgba(0, 240, 255, 0.15); color: var(--neon-cyan); }
+        .info-icon.purple { background: rgba(180, 77, 255, 0.15); color: var(--neon-purple); }
+        .info-icon.pink { background: rgba(255, 45, 149, 0.15); color: var(--neon-pink); }
+        .info-icon.green { background: rgba(57, 255, 20, 0.15); color: var(--neon-green); }
+
+        .info-details h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-details p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .info-details a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .info-details a:hover {
+            text-decoration: underline;
+        }
+
+        .social-connect {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.8rem;
+            text-align: center;
+        }
+
+        .social-connect h3 {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-icons a:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Contact Form */
+        .contact-form-wrapper {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+        }
+
+        .form-header {
+            margin-bottom: 2rem;
+        }
+
+        .form-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: var(--text-secondary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group label .required {
+            color: var(--neon-pink);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+        }
+
+        .form-input.error,
+        .form-textarea.error,
+        .form-select.error {
+            border-color: var(--neon-red);
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
+        }
+
+        .form-input.success,
+        .form-textarea.success,
+        .form-select.success {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23a0a0b0' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        .form-select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .error-message {
+            color: var(--neon-red);
+            font-size: 0.8rem;
+            margin-top: 0.4rem;
+            display: none;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--neon-cyan);
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .checkbox-group label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--neon-cyan), #0099ff);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+        }
+
+        .btn-submit .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        .btn-submit.loading .spinner {
+            display: block;
+        }
+
+        .btn-submit.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(57, 255, 20, 0.15);
+            border: 2px solid var(--neon-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--neon-green);
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        .success-message h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--neon-green);
+        }
+
+        .success-message p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Map Placeholder */
+        .map-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .map-placeholder {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--neon-cyan);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--neon-cyan), transparent);
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: pulseGlow 3s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        .map-placeholder i {
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.5));
+        }
+
+        .map-info {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .map-info p {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* FAQ Quick Links */
+        .faq-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--neon-purple);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .faq-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .faq-question i {
+            color: var(--neon-cyan);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, margin-top 0.4s ease;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--neon-cyan);
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .footer-col a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 3000;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-weight: 600;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            animation: slideInRight 0.3s ease, slideOutRight 0.3s ease 2.7s;
+            pointer-events: none;
+        }
+
+        .toast.error {
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+            box-shadow: 0 0 30px rgba(255, 68, 68, 0.3);
+        }
+
+        .toast.success {
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            .page-title {
+                font-size: 3rem;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--glass-border);
+                z-index: 999;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .page-title {
+                font-size: 2.5rem;
+            }
+            .whatsapp-float {
+                right: 1.5rem;
+                bottom: 1.5rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .contact-form-wrapper {
+                padding: 1.5rem;
+            }
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-register {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="logo" onclick="navigateTo('home')">
+                <div class="logo-icon"><img src="aletech-logo.png" class=" logo-icon"></i></div>
+                <span class="logo-text">Ale Tech-solutions</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="navigateTo('home')">Home</a></li>
+                <li><a onclick="navigateTo('services')">Services</a></li>
+                <li><a onclick="navigateTo('directory')">Directory</a></li>
+                <li><a onclick="navigateTo('blog')">Blog</a></li>
+                <li><a onclick="navigateTo('about')">About</a></li>
+                <li><a class="active" onclick="navigateTo('contact')">Contact</a></li>
+                <li><a class="btn-nav btn-login" onclick="navigateTo('logout')">Logout</a></li>
+           
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <span class="page-badge"><i class="fas fa-envelope"></i> Get in Touch</span>
+        <h1 class="page-title">Let's <span class="highlight">Connect</span></h1>
+        <p class="page-description">Have a question or ready to start your next project? We'd love to hear from you</p>
+    </section>
+
+    <!-- Contact Content -->
+    <div class="contact-content">
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <div class="info-card">
+                <div class="info-icon cyan">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="info-details">
+                    <h3>Visit Our Office</h3>
+                    <p>Plot 45, City Centre<br>Lilongwe, Malawi</p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon purple">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="info-details">
+                    <h3>Call Us</h3>
+                    <p><a href="tel:+265990828040">+265 990 828 040</a></p>
+                    <p style="font-size: 0.8rem;">Monday - Friday, 8AM - 5PM</p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon pink">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="info-details">
+                    <h3>Email Us</h3>
+                    <p><a href="mailto:hello@aletechsolutions.com">hello@aletechsolutions.com</a></p>
+                    <p style="font-size: 0.8rem;">We respond within 24 hours</p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon green">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="info-details">
+                    <h3>WhatsApp</h3>
+                    <p><a href="https://wa.me/265990828040" target="_blank">+265 990 828 040</a></p>
+                    <p style="font-size: 0.8rem;">Available 24/7</p>
+                </div>
+            </div>
+
+            <div class="social-connect">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper" id="contactFormWrapper">
+            <div class="form-header">
+                <h2>Send Us a Message</h2>
+                <p>Fill out the form below and we'll get back to you shortly</p>
+            </div>
+
+            <form id="contactForm" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input type="text" class="form-input" id="fullName" placeholder="Enter your full name" required>
+                        <div class="error-message" id="nameError"><i class="fas fa-exclamation-circle"></i> Please enter your full name</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address <span class="required">*</span></label>
+                        <input type="email" class="form-input" id="email" placeholder="Enter your email address" required>
+                        <div class="error-message" id="emailError"><i class="fas fa-exclamation-circle"></i> Please enter a valid email</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" class="form-input" id="phone" placeholder="+265 990 828 040">
+                        <div class="error-message" id="phoneError"><i class="fas fa-exclamation-circle"></i> Please enter a valid phone number</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Interested In</label>
+                        <select class="form-select" id="service">
+                            <option value="">Select a service</option>
+                            <option value="web-development">Web Development</option>
+                            <option value="mobile-apps">Mobile App Development</option>
+                            <option value="ui-ux-design">UI/UX Design</option>
+                            <option value="digital-marketing">Digital Marketing</option>
+                            <option value="business-consulting">Business Consulting</option>
+                            <option value="cloud-services">Cloud Services</option>
+                            <option value="tech-support">Tech Support</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Subject <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="subject" placeholder="What is this about?" required>
+                    <div class="error-message" id="subjectError"><i class="fas fa-exclamation-circle"></i> Please enter a subject</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Message <span class="required">*</span></label>
+                    <textarea class="form-textarea" id="message" placeholder="Tell us about your project or question..." required></textarea>
+                    <div class="error-message" id="messageError"><i class="fas fa-exclamation-circle"></i> Please enter your message (minimum 10 characters)</div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">I agree to the <a href="#" style="color: var(--neon-cyan);">Terms of Service</a> and <a href="#" style="color: var(--neon-cyan);">Privacy Policy</a></label>
+                    </div>
+                    <div class="error-message" id="termsError"><i class="fas fa-exclamation-circle"></i> You must agree to the terms</div>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <span class="spinner"></span>
+                    <span class="btn-text"><i class="fas fa-paper-plane"></i> Send Message</span>
+                </button>
+            </form>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Message Sent Successfully!</h3>
+                <p>Thank you for contacting us. We've received your message and will get back to you within 24 hours.</p>
+                <button class="btn-submit" onclick="resetForm()" style="width: auto; padding: 0.8rem 2rem;">
+                    <i class="fas fa-plus"></i> Send Another Message
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="map-placeholder">
+            <div class="map-info">
+                <i class="fas fa-map-marked-alt"></i>
+                <p>📍 Plot 45, City Centre, Lilongwe, Malawi</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="section-header">
+            <span class="section-tag">FAQ</span>
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    What services do you offer?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    We offer web development, mobile app development, UI/UX design, digital marketing, business consulting, cloud services, and 24/7 tech support. Visit our Services page for detailed information.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    How long does it take to build a website?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Project timelines vary depending on complexity. A simple business website typically takes 2-4 weeks, while complex web applications can take 8-12 weeks or more. We'll provide a detailed timeline during consultation.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Do you offer support after project completion?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Yes! We offer ongoing maintenance and support packages to ensure your digital products continue running smoothly. We're always available for updates, fixes, and improvements.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    What are your payment terms?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    We typically require a 50% deposit to begin work, with the remaining balance due upon project completion. For larger projects, we can arrange milestone-based payments. We accept bank transfers and mobile money.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Ale Tech-solutions</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Building Malawi's digital future, one connection at a time.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a onclick="navigateTo('services')">Services</a>
+                <a onclick="navigateTo('directory')">Business Directory</a>
+                <a onclick="navigateTo('blog')">Blog</a>
+                <a onclick="navigateTo('about')">About Us</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a onclick="navigateTo('contact')">Contact Us</a>
+                <a href="#">FAQ</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="#"><i class="fas fa-envelope"></i> hello@aletechsolutions.com</a>
+                <a href="#"><i class="fas fa-phone"></i> +265 990 828 040</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i> Lilongwe, Malawi</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Ale Tech-solutions. All rights reserved. Made with ❤️ in Malawi</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/265990828040" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+
+    <script>
+        // Navigation
+        function navigateTo(page) {
+            const pages = {
+                'home': 'home.html',
+                'services': 'services.html',
+                'directory': 'directory.html',
+                'blog': 'blog.html',
+                'about': 'about.html',
+                'contact': 'contact.html',
+                'logout': 'index.html'
+            };
+            if (pages[page]) window.location.href = pages[page];
+        }
+
+        // Toast notification
+        function showToast(message, type = 'info') {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            const toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Form validation
+        function showError(inputId, errorId) {
+            document.getElementById(inputId).classList.add('error');
+            document.getElementById(inputId).classList.remove('success');
+            document.getElementById(errorId).classList.add('show');
+        }
+
+        function showSuccess(inputId, errorId) {
+            document.getElementById(inputId).classList.remove('error');
+            document.getElementById(inputId).classList.add('success');
+            document.getElementById(errorId).classList.remove('show');
+        }
+
+        function validateField(inputId, errorId, validationFn) {
+            const input = document.getElementById(inputId);
+            const value = input.value.trim();
+            if (validationFn(value)) {
+                showSuccess(inputId, errorId);
+                return true;
+            } else {
+                showError(inputId, errorId);
+                return false;
+            }
+        }
+
+        // Real-time validation
+        document.getElementById('fullName').addEventListener('input', function() {
+            validateField('fullName', 'nameError', v => v.length >= 2);
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+            validateField('email', 'emailError', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+        });
+
+        document.getElementById('phone').addEventListener('input', function() {
+            const val = this.value.trim();
+            if (val === '') {
+                document.getElementById('phone').classList.remove('error', 'success');
+                document.getElementById('phoneError').classList.remove('show');
+            } else {
+                validateField('phone', 'phoneError', v => /^\+?[\d\s-]{9,15}$/.test(v));
+            }
+        });
+
+        document.getElementById('subject').addEventListener('input', function() {
+            validateField('subject', 'subjectError', v => v.length >= 3);
+        });
+
+        document.getElementById('message').addEventListener('input', function() {
+            validateField('message', 'messageError', v => v.length >= 10);
+        });
+
+        document.getElementById('agreeTerms').addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('termsError').classList.remove('show');
+            }
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let isValid = true;
+
+            // Validate all fields
+            if (!validateField('fullName', 'nameError', v => v.length >= 2)) isValid = false;
+            if (!validateField('email', 'emailError', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))) isValid = false;
+            
+            const phoneVal = document.getElementById('phone').value.trim();
+            if (phoneVal && !/^\+?[\d\s-]{9,15}$/.test(phoneVal)) {
+                showError('phone', 'phoneError');
+                isValid = false;
+            }
+            
+            if (!validateField('subject', 'subjectError', v => v.length >= 3)) isValid = false;
+            if (!validateField('message', 'messageError', v => v.length >= 10)) isValid = false;
+
+            if (!document.getElementById('agreeTerms').checked) {
+                document.getElementById('termsError').classList.add('show');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                showToast('Please fix the errors in the form', 'error');
+                return;
+            }
+
+            // Simulate form submission
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+
+                // Hide form, show success
+                document.getElementById('contactForm').style.display = 'none';
+                document.getElementById('successMessage').classList.add('show');
+                showToast('Message sent successfully! We\'ll get back to you soon.', 'success');
+
+                // Log form data (for demo)
+                const formData = {
+                    name: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    service: document.getElementById('service').value,
+                    subject: document.getElementById('subject').value,
+                    message: document.getElementById('message').value
+                };
+                console.log('📩 Contact Form Submission:', formData);
+            }, 2000);
+        });
+
+        // Reset form
+        function resetForm() {
+            document.getElementById('contactForm').reset();
+            document.getElementById('contactForm').style.display = 'block';
+            document.getElementById('successMessage').classList.remove('show');
+            document.querySelectorAll('.form-input, .form-textarea, .form-select').forEach(el => {
+                el.classList.remove('error', 'success');
+            });
+            document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+
+        // FAQ toggle
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQs
+            document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+            
+            // Open clicked FAQ if it wasn't already open
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // Mobile menu
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Generate particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 6 + 6) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        console.log('✅ Ale Tech-solutions Contact Page Loaded!');
+        console.log('📞 Contact channels: Phone | Email | WhatsApp | Office Visit');
+        console.log('📝 Form validation: Active | FAQ accordion: Working');
+    </script>
+</body>
+</html>

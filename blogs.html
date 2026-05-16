@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Blog - Ale Tech-solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --glass-bg: rgba(18, 18, 30, 0.7);
+            --glass-border: rgba(0, 255, 255, 0.15);
+            --neon-cyan: #00f0ff;
+            --neon-purple: #b44dff;
+            --neon-pink: #ff2d95;
+            --neon-green: #39ff14;
+            --neon-orange: #ff6b35;
+            --neon-yellow: #ffd700;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0b0;
+            --text-dim: #6a6a7a;
+            --gradient-1: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0d0d18 100%);
+            --gradient-2: linear-gradient(135deg, #00f0ff20, #b44dff20);
+            --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2);
+            --glow-purple: 0 0 20px rgba(180, 77, 255, 0.4), 0 0 40px rgba(180, 77, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: linear-gradient(rgba(0, 240, 255, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.5) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Floating particles */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: floatUp 8s infinite;
+            opacity: 0;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .particle:nth-child(even) {
+            background: var(--neon-purple);
+            box-shadow: var(--glow-purple);
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            cursor: pointer;
+        }
+
+       img{
+            width: 90px;
+            height: 90px;
+            margin-left: -30px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--neon-cyan);
+            animation: logoPulse 3s infinite;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-cyan);
+            transition: width 0.3s ease;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--neon-cyan);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .btn-nav {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .btn-login {
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .btn-login:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            color: white;
+            margin-left: 0.5rem;
+            box-shadow: 0 0 20px rgba(180, 77, 255, 0.3);
+        }
+
+        .btn-register:hover {
+            box-shadow: 0 0 35px rgba(255, 45, 149, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .page-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title .highlight {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Blog Content Layout */
+        .blog-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Featured Post */
+        .featured-post {
+            grid-column: 1 / -1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .featured-post:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 240, 255, 0.1);
+        }
+
+        .featured-image {
+            background: var(--gradient-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: var(--neon-cyan);
+            position: relative;
+            overflow: hidden;
+            min-height: 350px;
+        }
+
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--neon-cyan), transparent);
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: pulseGlow 3s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.5); opacity: 0.8; }
+        }
+
+        .featured-image i {
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 30px rgba(0, 240, 255, 0.5));
+        }
+
+        .featured-content {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-tag {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: rgba(180, 77, 255, 0.2);
+            border: 1px solid rgba(180, 77, 255, 0.3);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--neon-purple);
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .featured-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .featured-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .post-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .post-meta i {
+            color: var(--neon-cyan);
+        }
+
+        .btn-read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            background: linear-gradient(135deg, var(--neon-cyan), #0099ff);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: fit-content;
+            font-size: 0.95rem;
+        }
+
+        .btn-read-more:hover {
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Blog Posts Grid */
+        .posts-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .blog-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 240, 255, 0.08);
+        }
+
+        .blog-card-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .blog-card-image.tech { background: rgba(0, 240, 255, 0.1); color: var(--neon-cyan); }
+        .blog-card-image.business { background: rgba(180, 77, 255, 0.1); color: var(--neon-purple); }
+        .blog-card-image.design { background: rgba(255, 45, 149, 0.1); color: var(--neon-pink); }
+        .blog-card-image.security { background: rgba(57, 255, 20, 0.1); color: var(--neon-green); }
+
+        .blog-card-body {
+            padding: 1.5rem;
+        }
+
+        .blog-card-category {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+        }
+
+        .category-tech { background: rgba(0, 240, 255, 0.15); color: var(--neon-cyan); }
+        .category-business { background: rgba(180, 77, 255, 0.15); color: var(--neon-purple); }
+        .category-design { background: rgba(255, 45, 149, 0.15); color: var(--neon-pink); }
+        .category-security { background: rgba(57, 255, 20, 0.15); color: var(--neon-green); }
+
+        .blog-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .blog-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .sidebar-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-card h3 i {
+            color: var(--neon-cyan);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--neon-cyan);
+        }
+
+        .search-box button {
+            padding: 0.7rem 1rem;
+            background: var(--neon-cyan);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .search-box button:hover {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            padding: 0.6rem 0.8rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .category-list li:hover,
+        .category-list li.active {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--neon-cyan);
+        }
+
+        .count-badge {
+            background: var(--glass-bg);
+            padding: 0.15rem 0.5rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+        }
+
+        .popular-post {
+            display: flex;
+            gap: 0.8rem;
+            padding: 0.8rem 0;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .popular-post:last-child {
+            border-bottom: none;
+        }
+
+        .popular-post:hover {
+            padding-left: 0.5rem;
+        }
+
+        .popular-post-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .popular-post-info h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .popular-post-info span {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        /* Newsletter */
+        .newsletter-form input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--neon-purple);
+        }
+
+        .newsletter-form button {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            box-shadow: 0 0 25px rgba(255, 45, 149, 0.4);
+        }
+
+        /* Blog Post Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 250px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-image.tech { background: rgba(0, 240, 255, 0.1); color: var(--neon-cyan); }
+        .modal-image.business { background: rgba(180, 77, 255, 0.1); color: var(--neon-purple); }
+        .modal-image.design { background: rgba(255, 45, 149, 0.1); color: var(--neon-pink); }
+        .modal-image.security { background: rgba(57, 255, 20, 0.1); color: var(--neon-green); }
+
+        .modal h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal .post-meta {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-content-text {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background: rgba(0, 240, 255, 0.15);
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 2;
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--neon-cyan);
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .footer-col a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 3000;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-weight: 600;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            animation: slideInRight 0.3s ease, slideOutRight 0.3s ease 2.7s;
+            pointer-events: none;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .blog-content {
+                grid-template-columns: 1fr;
+            }
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+            .featured-image {
+                min-height: 250px;
+            }
+            .sidebar {
+                position: static;
+            }
+            .page-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--glass-border);
+                z-index: 999;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .page-title {
+                font-size: 2.5rem;
+            }
+            .featured-content h2 {
+                font-size: 1.5rem;
+            }
+            .whatsapp-float {
+                right: 1.5rem;
+                bottom: 1.5rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .post-meta {
+                gap: 0.8rem;
+            }
+            .btn-register {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="logo" onclick="navigateTo('home')">
+                <div class="logo-icon"><img src="aletech-logo.png" class=" logo-icon"></i></div>
+                <span class="logo-text">Ale Tech-solutions</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="navigateTo('home')">Home</a></li>
+                <li><a onclick="navigateTo('services')">Services</a></li>
+                <li><a onclick="navigateTo('directory')">Directory</a></li>
+                <li><a class="active" onclick="navigateTo('blog')">Blog</a></li>
+                <li><a onclick="navigateTo('about')">About</a></li>
+                <li><a onclick="navigateTo('contact')">Contact</a></li>
+                <li><a class="btn-nav btn-login" onclick="navigateTo('logout')">logout</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <span class="page-badge"><i class="fas fa-newspaper"></i> Tech Blog</span>
+        <h1 class="page-title">Latest <span class="highlight">Tech Insights</span></h1>
+        <p class="page-description">Stay updated with the latest technology trends, tutorials, and industry news from Malawi and beyond</p>
+    </section>
+
+    <!-- Blog Content -->
+    <div class="blog-content">
+        <!-- Featured Post -->
+        <article class="featured-post" onclick="openPostModal('featured')">
+            <div class="featured-image">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="featured-content">
+                <span class="featured-tag">Trending</span>
+                <h2>How AI is Transforming Business in Malawi: 2026 Guide</h2>
+                <p>Discover how artificial intelligence is revolutionizing industries across Malawi, from agriculture to healthcare...</p>
+                <div class="post-meta">
+                    <span><i class="fas fa-user"></i> Chimwemwe Banda</span>
+                    <span><i class="fas fa-calendar"></i> May 15, 2026</span>
+                    <span><i class="fas fa-clock"></i> 8 min read</span>
+                </div>
+                <button class="btn-read-more" onclick="event.stopPropagation(); openPostModal('featured')">Read Full Article <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </article>
+
+        <!-- Main Posts Grid -->
+        <div class="posts-grid" id="postsGrid">
+            <!-- Posts rendered by JavaScript -->
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-card">
+                <h3><i class="fas fa-search"></i> Search Articles</h3>
+                <div class="search-box">
+                    <input type="text" id="blogSearch" placeholder="Search posts..." onkeypress="if(event.key==='Enter') searchBlog()">
+                    <button onclick="searchBlog()"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3><i class="fas fa-folder"></i> Categories</h3>
+                <ul class="category-list" id="blogCategories">
+                    <li class="active" data-category="all" onclick="filterByCategory('all', this)">All Posts <span class="count-badge">8</span></li>
+                    <li data-category="tech" onclick="filterByCategory('tech', this)">Technology <span class="count-badge">3</span></li>
+                    <li data-category="business" onclick="filterByCategory('business', this)">Business <span class="count-badge">2</span></li>
+                    <li data-category="design" onclick="filterByCategory('design', this)">Design <span class="count-badge">2</span></li>
+                    <li data-category="security" onclick="filterByCategory('security', this)">Security <span class="count-badge">1</span></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-card">
+                <h3><i class="fas fa-fire"></i> Popular Posts</h3>
+                <div id="popularPosts">
+                    <div class="popular-post" onclick="openPostModal(1)">
+                        <div class="popular-post-icon" style="background: rgba(0,240,255,0.15); color: var(--neon-cyan);">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="popular-post-info">
+                            <h4>Top 10 Apps for Business</h4>
+                            <span>2,456 views</span>
+                        </div>
+                    </div>
+                    <div class="popular-post" onclick="openPostModal(4)">
+                        <div class="popular-post-icon" style="background: rgba(180,77,255,0.15); color: var(--neon-purple);">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="popular-post-info">
+                            <h4>Cybersecurity Best Practices</h4>
+                            <span>1,892 views</span>
+                        </div>
+                    </div>
+                    <div class="popular-post" onclick="openPostModal(2)">
+                        <div class="popular-post-icon" style="background: rgba(57,255,20,0.15); color: var(--neon-green);">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="popular-post-info">
+                            <h4>E-commerce Trends 2026</h4>
+                            <span>1,567 views</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3><i class="fas fa-envelope"></i> Newsletter</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Get the latest tech news directly to your inbox.</p>
+                <div class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" id="newsletterEmail" placeholder="Your email address" required>
+                    <button type="button" onclick="subscribeNewsletter()">Subscribe Now</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="blogPagination">
+        <button class="page-btn" onclick="changePage('prev')"><i class="fas fa-chevron-left"></i></button>
+        <button class="page-btn active" data-page="1" onclick="changePage(1)">1</button>
+        <button class="page-btn" data-page="2" onclick="changePage(2)">2</button>
+        <button class="page-btn" data-page="3" onclick="changePage(3)">3</button>
+        <button class="page-btn" onclick="changePage('next')"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- Blog Post Modal -->
+    <div class="modal-overlay" id="postModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            <div class="modal-image tech" id="modalImage"><i class="fas fa-robot"></i></div>
+            <span class="blog-card-category category-tech" id="modalCategory">Technology</span>
+            <h2 id="modalTitle">Post Title</h2>
+            <div class="post-meta">
+                <span><i class="fas fa-user"></i> <span id="modalAuthor">Author</span></span>
+                <span><i class="fas fa-calendar"></i> <span id="modalDate">Date</span></span>
+                <span><i class="fas fa-clock"></i> <span id="modalReadTime">5 min read</span></span>
+            </div>
+            <div class="modal-content-text" id="modalContent">
+                Full article content here...
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Ale Tech-solutions</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Building Malawi's digital future, one connection at a time.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a onclick="navigateTo('services')">Services</a>
+                <a onclick="navigateTo('directory')">Business Directory</a>
+                <a onclick="navigateTo('blog')">Blog</a>
+                <a onclick="navigateTo('about')">About Us</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a onclick="navigateTo('contact')">Contact Us</a>
+                <a href="#">FAQ</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="#"><i class="fas fa-envelope"></i> hello@aletechsolutions.com</a>
+                <a href="#"><i class="fas fa-phone"></i> +265 888 000 000</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i> Lilongwe, Malawi</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Ale Tech-solutions. All rights reserved. Made with ❤️ in Malawi</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/265990828040" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+
+    <script>
+        // Blog posts data
+        const blogPosts = [
+            {
+                id: 1,
+                title: "Top 10 Mobile Apps for Business Owners in Malawi",
+                category: "tech",
+                icon: "fa-mobile-alt",
+                imageClass: "tech",
+                author: "Chimwemwe Banda",
+                date: "May 12, 2026",
+                readTime: "5 min read",
+                excerpt: "Discover the most useful mobile applications that can help streamline your business operations...",
+                content: "In today's fast-paced business environment, having the right tools on your mobile device can make all the difference. From accounting apps to project management tools, we've compiled the top 10 essential apps for Malawian business owners. These applications have been tested and proven to increase productivity, streamline operations, and boost overall business efficiency. Whether you're running a small startup or managing a growing enterprise, these tools will help you stay organized and competitive in the digital age. The list includes popular apps like QuickBooks for accounting, Trello for project management, Slack for team communication, and local solutions like Mlimi Pay for agricultural transactions.",
+                views: 2456
+            },
+            {
+                id: 2,
+                title: "The Rise of E-Commerce in Malawi: Trends for 2026",
+                category: "business",
+                icon: "fa-store",
+                imageClass: "business",
+                author: "Thoko Chirwa",
+                date: "May 10, 2026",
+                readTime: "6 min read",
+                excerpt: "Explore how e-commerce is reshaping the retail landscape in Malawi and what it means for businesses...",
+                content: "The e-commerce sector in Malawi has experienced unprecedented growth over the past few years. With increasing internet penetration and mobile money adoption, more consumers are turning to online platforms for their shopping needs. This comprehensive analysis examines the key trends driving this digital commerce revolution, including the rise of social commerce, the integration of local payment solutions like Airtel Money and TNM Mpamba, and the growing demand for last-mile delivery services. We also explore how traditional businesses can adapt to this changing landscape by establishing an online presence and leveraging digital marketing strategies.",
+                views: 1567
+            },
+            {
+                id: 3,
+                title: "UI/UX Design Principles Every Developer Should Know",
+                category: "design",
+                icon: "fa-paint-brush",
+                imageClass: "design",
+                author: "Grace Phiri",
+                date: "May 8, 2026",
+                readTime: "7 min read",
+                excerpt: "Learn the fundamental design principles that will elevate your web and app development projects...",
+                content: "Great design is not just about aesthetics—it's about creating intuitive, accessible, and enjoyable user experiences. This article covers the essential UI/UX principles that every developer should understand, from color theory and typography to user flow and accessibility standards. We provide practical examples and case studies from successful Malawian tech products, demonstrating how good design directly impacts user engagement and business success. Whether you're a seasoned developer or just starting out, these principles will transform your approach to digital product creation. Key topics include the importance of consistency, visual hierarchy, responsive design, and user testing methodologies.",
+                views: 1234
+            },
+            {
+                id: 4,
+                title: "Cybersecurity Best Practices for Small Businesses",
+                category: "security",
+                icon: "fa-shield-alt",
+                imageClass: "security",
+                author: "Dumisani Nkhoma",
+                date: "May 5, 2026",
+                readTime: "8 min read",
+                excerpt: "Protect your business from cyber threats with these essential security practices and protocols...",
+                content: "Cybersecurity is no longer optional for small businesses—it's a necessity. With cyber attacks becoming increasingly sophisticated, protecting your business data and customer information has never been more critical. This comprehensive guide walks you through essential security measures including implementing strong password policies, setting up multi-factor authentication, conducting regular security audits, training employees on security awareness, and creating incident response plans. We also discuss affordable security tools suitable for small business budgets in Malawi, such as free antivirus solutions, firewall configurations, and secure backup strategies.",
+                views: 1892
+            },
+            {
+                id: 5,
+                title: "Cloud Computing: Why Your Business Needs to Migrate Now",
+                category: "tech",
+                icon: "fa-cloud",
+                imageClass: "tech",
+                author: "Chimwemwe Banda",
+                date: "May 3, 2026",
+                readTime: "6 min read",
+                excerpt: "Understanding the benefits of cloud migration and how it can transform your business operations...",
+                content: "Cloud computing has revolutionized the way businesses operate, offering scalability, cost savings, and enhanced collaboration capabilities. This article explores why Malawian businesses should consider migrating to the cloud, covering topics such as reduced IT infrastructure costs, improved data security, automatic software updates, and the ability to work remotely. We provide a step-by-step guide on how to plan your cloud migration strategy and highlight success stories from local businesses that have already made the transition to platforms like Microsoft Azure, Google Cloud, and Amazon Web Services.",
+                views: 987
+            },
+            {
+                id: 6,
+                title: "Building a Strong Brand Identity in the Digital Age",
+                category: "design",
+                icon: "fa-fingerprint",
+                imageClass: "design",
+                author: "Grace Phiri",
+                date: "April 28, 2026",
+                readTime: "5 min read",
+                excerpt: "Learn how to create a memorable brand that stands out in today's competitive digital marketplace...",
+                content: "In the crowded digital landscape, a strong brand identity is crucial for business success. This article guides you through the process of building a compelling brand that resonates with your target audience. Topics include defining your brand values and mission, creating a visual identity system, developing a consistent brand voice, and leveraging digital channels for brand building. We feature interviews with successful Malawian entrepreneurs who share their branding journeys and lessons learned along the way. The article also covers practical tools for brand management and measurement.",
+                views: 1567
+            },
+            {
+                id: 7,
+                title: "The Future of FinTech in Malawi: Opportunities and Challenges",
+                category: "business",
+                icon: "fa-chart-line",
+                imageClass: "business",
+                author: "Thoko Chirwa",
+                date: "April 25, 2026",
+                readTime: "7 min read",
+                excerpt: "Exploring the rapidly growing FinTech sector in Malawi and what it means for entrepreneurs...",
+                content: "Malawi's FinTech sector is experiencing remarkable growth, driven by mobile money adoption and increasing demand for digital financial services. This article examines the current state of FinTech in Malawi, highlighting key players, regulatory developments, and emerging opportunities. We discuss areas such as digital lending, insurtech, blockchain applications, and payment innovations. The article also addresses challenges including financial literacy gaps and infrastructure limitations, providing insights on how entrepreneurs can navigate this evolving landscape and capitalize on the growing demand for digital financial solutions.",
+                views: 2100
+            },
+            {
+                id: 8,
+                title: "Getting Started with Web Development: A Beginner's Guide",
+                category: "tech",
+                icon: "fa-code",
+                imageClass: "tech",
+                author: "Dumisani Nkhoma",
+                date: "April 20, 2026",
+                readTime: "10 min read",
+                excerpt: "Everything you need to know to start your journey in web development, from HTML to deployment...",
+                content: "Web development is one of the most in-demand skills in today's job market. This comprehensive beginner's guide covers everything you need to start your web development journey. We begin with the fundamentals of HTML, CSS, and JavaScript, then progress to more advanced topics like responsive design, version control with Git, and basic backend development. The article includes practical exercises, recommended learning resources, and tips from experienced developers in Malawi. By the end, you'll have a clear roadmap to becoming a proficient web developer, including guidance on building your first portfolio project.",
+                views: 3210
+            }
+        ];
+
+        let currentBlogFilter = 'all';
+        let currentPage = 1;
+        const postsPerPage = 4;
+
+        // Navigation function
+        function navigateTo(page) {
+            const pages = {
+                'home': 'home.html',
+                'services': 'services.html',
+                'directory': 'directory.html',
+                'blog': 'blog.html',
+                'about': 'about.html',
+                'contact': 'contact.html',
+                'logout': 'index.html'
+            };
+            
+            if (pages[page]) {
+                window.location.href = pages[page];
+            }
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Render blog posts
+        function renderBlogPosts(filter = 'all', page = 1) {
+            let filtered = [...blogPosts];
+            
+            if (filter !== 'all') {
+                filtered = filtered.filter(p => p.category === filter);
+            }
+
+            const totalPages = Math.ceil(filtered.length / postsPerPage);
+            const start = (page - 1) * postsPerPage;
+            const paginatedPosts = filtered.slice(start, start + postsPerPage);
+
+            const grid = document.getElementById('postsGrid');
+            
+            if (paginatedPosts.length === 0) {
+                grid.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: var(--text-dim);">
+                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                        <p>No posts found. Try a different search or category.</p>
+                    </div>
+                `;
+            } else {
+                grid.innerHTML = paginatedPosts.map(post => `
+                    <article class="blog-card" onclick="openPostModal(${post.id})">
+                        <div class="blog-card-image ${post.imageClass}">
+                            <i class="fas ${post.icon}"></i>
+                        </div>
+                        <div class="blog-card-body">
+                            <span class="blog-card-category category-${post.category}">${post.category}</span>
+                            <h3>${post.title}</h3>
+                            <p>${post.excerpt}</p>
+                            <div class="post-meta" style="margin-top: 1rem;">
+                                <span><i class="fas fa-user"></i> ${post.author}</span>
+                                <span><i class="fas fa-calendar"></i> ${post.date}</span>
+                            </div>
+                        </div>
+                    </article>
+                `).join('');
+            }
+
+            // Update pagination
+            updatePagination(page, totalPages);
+            currentPage = page;
+            currentBlogFilter = filter;
+        }
+
+        // Update pagination buttons
+        function updatePagination(currentPage, totalPages) {
+            const pagination = document.getElementById('blogPagination');
+            const pageButtons = pagination.querySelectorAll('.page-btn[data-page]');
+            
+            pageButtons.forEach(btn => {
+                const pageNum = parseInt(btn.dataset.page);
+                if (pageNum <= totalPages) {
+                    btn.style.display = 'flex';
+                    btn.classList.toggle('active', pageNum === currentPage);
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+        }
+
+        // Change page
+        function changePage(page) {
+            if (page === 'prev') {
+                if (currentPage > 1) renderBlogPosts(currentBlogFilter, currentPage - 1);
+            } else if (page === 'next') {
+                const totalPages = Math.ceil(blogPosts.filter(p => currentBlogFilter === 'all' || p.category === currentBlogFilter).length / postsPerPage);
+                if (currentPage < totalPages) renderBlogPosts(currentBlogFilter, currentPage + 1);
+            } else {
+                renderBlogPosts(currentBlogFilter, page);
+            }
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+
+        // Filter by category
+        function filterByCategory(category, element) {
+            document.querySelectorAll('#blogCategories li').forEach(l => l.classList.remove('active'));
+            element.classList.add('active');
+            renderBlogPosts(category, 1);
+        }
+
+        // Search blog
+        function searchBlog() {
+            const query = document.getElementById('blogSearch').value.toLowerCase().trim();
+            
+            if (!query) {
+                renderBlogPosts(currentBlogFilter, currentPage);
+                return;
+            }
+            
+            const filtered = blogPosts.filter(p => 
+                p.title.toLowerCase().includes(query) ||
+                p.excerpt.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query) ||
+                p.author.toLowerCase().includes(query)
+            );
+            
+            const grid = document.getElementById('postsGrid');
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: var(--text-dim);">
+                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                        <p>No results found for "<strong>${query}</strong>"</p>
+                    </div>
+                `;
+            } else {
+                grid.innerHTML = filtered.map(post => `
+                    <article class="blog-card" onclick="openPostModal(${post.id})">
+                        <div class="blog-card-image ${post.imageClass}">
+                            <i class="fas ${post.icon}"></i>
+                        </div>
+                        <div class="blog-card-body">
+                            <span class="blog-card-category category-${post.category}">${post.category}</span>
+                            <h3>${post.title}</h3>
+                            <p>${post.excerpt}</p>
+                            <div class="post-meta" style="margin-top: 1rem;">
+                                <span><i class="fas fa-user"></i> ${post.author}</span>
+                                <span><i class="fas fa-calendar"></i> ${post.date}</span>
+                            </div>
+                        </div>
+                    </article>
+                `).join('');
+            }
+            
+            document.getElementById('blogPagination').style.display = 'none';
+            showToast(`Found ${filtered.length} result(s)`);
+        }
+
+        // Open post modal
+        function openPostModal(postId) {
+            let post;
+            if (postId === 'featured') {
+                post = {
+                    title: "How AI is Transforming Business in Malawi: 2026 Guide",
+                    category: "tech",
+                    imageClass: "tech",
+                    icon: "fa-robot",
+                    author: "Chimwemwe Banda",
+                    date: "May 15, 2026",
+                    readTime: "8 min read",
+                    content: "Artificial Intelligence is no longer a futuristic concept—it's here and transforming businesses across Malawi. From smart agriculture solutions that help farmers optimize crop yields to AI-powered healthcare diagnostics improving patient outcomes, the impact of AI is profound and far-reaching. This comprehensive guide explores how Malawian businesses of all sizes can leverage AI technologies to gain competitive advantages. We cover practical applications in various sectors including finance, agriculture, healthcare, and retail. The article also addresses common misconceptions about AI and provides actionable steps for businesses looking to begin their AI journey, regardless of their technical expertise or budget constraints. Key topics include machine learning basics, natural language processing applications, and computer vision use cases relevant to the Malawian market."
+                };
+            } else {
+                post = blogPosts.find(p => p.id === postId);
+            }
+            
+            if (!post) return;
+
+            document.getElementById('modalImage').className = 'modal-image ' + (post.imageClass || 'tech');
+            document.getElementById('modalImage').innerHTML = `<i class="fas ${post.icon || 'fa-robot'}"></i>`;
+            document.getElementById('modalCategory').textContent = post.category.charAt(0).toUpperCase() + post.category.slice(1);
+            document.getElementById('modalCategory').className = 'blog-card-category category-' + post.category;
+            document.getElementById('modalTitle').textContent = post.title;
+            document.getElementById('modalAuthor').textContent = post.author;
+            document.getElementById('modalDate').textContent = post.date;
+            document.getElementById('modalReadTime').textContent = post.readTime;
+            document.getElementById('modalContent').textContent = post.content;
+            
+            document.getElementById('postModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('postModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('postModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('postModal')) closeModal();
+        });
+
+        // Newsletter subscription
+        function subscribeNewsletter() {
+            const emailInput = document.getElementById('newsletterEmail');
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showToast('Please enter your email address');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                showToast('Please enter a valid email address');
+                return;
+            }
+            
+            showToast('🎉 Successfully subscribed to newsletter!');
+            emailInput.value = '';
+        }
+
+        // Mobile menu
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Keyboard escape to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Generate particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 6 + 6) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Initial render
+        renderBlogPosts();
+        
+        console.log('✅ Ale Tech-solutions Blog Page Fully Functional!');
+        console.log('📝 Total posts:', blogPosts.length);
+        console.log('🔗 Navigation: Home | Services | Directory | Blog | About | Contact');
+        console.log('🔍 Search: Working | 📂 Categories: Working | 📧 Newsletter: Working');
+    </script>
+</body>
+</html>

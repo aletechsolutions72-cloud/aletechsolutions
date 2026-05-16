@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Directory - Ale Tech-solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --glass-bg: rgba(18, 18, 30, 0.7);
+            --glass-border: rgba(0, 255, 255, 0.15);
+            --neon-cyan: #00f0ff;
+            --neon-purple: #b44dff;
+            --neon-pink: #ff2d95;
+            --neon-green: #39ff14;
+            --neon-orange: #ff6b35;
+            --neon-yellow: #ffd700;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0b0;
+            --text-dim: #6a6a7a;
+            --gradient-1: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0d0d18 100%);
+            --gradient-2: linear-gradient(135deg, #00f0ff20, #b44dff20);
+            --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2);
+            --glow-purple: 0 0 20px rgba(180, 77, 255, 0.4), 0 0 40px rgba(180, 77, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: linear-gradient(rgba(0, 240, 255, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.5) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+       img{
+            width: 90px;
+            height: 90px;
+            margin-left: -30px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--neon-cyan);
+            animation: logoPulse 3s infinite;
+        }
+        .logo-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-cyan);
+            transition: width 0.3s ease;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--neon-cyan);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .btn-nav {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-login {
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .btn-login:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            color: white;
+            margin-left: 0.5rem;
+            box-shadow: 0 0 20px rgba(180, 77, 255, 0.3);
+        }
+
+        .btn-register:hover {
+            box-shadow: 0 0 35px rgba(255, 45, 149, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .page-title {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+        }
+
+        .page-title .highlight {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Search Section */
+        .search-section {
+            padding: 1rem 2rem 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-input-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            gap: 0.8rem;
+        }
+
+        .search-input-wrapper i {
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+            padding: 0.8rem 0;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .search-btn {
+            padding: 0.9rem 2rem;
+            background: linear-gradient(135deg, var(--neon-cyan), #0099ff);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            max-width: 1400px;
+            margin: 0 auto 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            padding: 0 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        /* Directory Content */
+        .directory-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Sidebar Filters */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .filter-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-card h3 i {
+            color: var(--neon-cyan);
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            padding: 0.6rem 0.8rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-list li:hover,
+        .category-list li.active {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--neon-cyan);
+        }
+
+        .category-count {
+            background: var(--glass-bg);
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .rating-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .rating-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .rating-option .stars {
+            color: var(--neon-yellow);
+        }
+
+        .btn-list-business {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-list-business:hover {
+            box-shadow: 0 0 30px rgba(255, 45, 149, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            min-height: 600px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .results-count {
+            color: var(--text-secondary);
+        }
+
+        .results-count span {
+            color: var(--neon-cyan);
+            font-weight: 700;
+        }
+
+        .sort-select {
+            padding: 0.7rem 1.2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .sort-select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        /* Business Cards */
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .business-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.8rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .business-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 240, 255, 0.1);
+        }
+
+        .business-card.featured {
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 25px rgba(180, 77, 255, 0.1);
+        }
+
+        .featured-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 0.8rem;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .business-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .business-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .business-logo.tech { background: rgba(0, 240, 255, 0.15); color: var(--neon-cyan); }
+        .business-logo.design { background: rgba(255, 45, 149, 0.15); color: var(--neon-pink); }
+        .business-logo.marketing { background: rgba(57, 255, 20, 0.15); color: var(--neon-green); }
+        .business-logo.finance { background: rgba(255, 215, 0, 0.15); color: var(--neon-yellow); }
+        .business-logo.health { background: rgba(180, 77, 255, 0.15); color: var(--neon-purple); }
+
+        .business-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .business-category {
+            font-size: 0.8rem;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .business-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .business-rating .stars {
+            color: var(--neon-yellow);
+            font-size: 0.85rem;
+        }
+
+        .business-rating .rating-num {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .business-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .business-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+        }
+
+        .business-contact {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-contact {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-call {
+            background: rgba(57, 255, 20, 0.15);
+            color: var(--neon-green);
+            border: 1px solid rgba(57, 255, 20, 0.3);
+        }
+
+        .btn-call:hover {
+            background: rgba(57, 255, 20, 0.25);
+        }
+
+        .btn-profile {
+            background: var(--neon-cyan);
+            color: #000;
+        }
+
+        .btn-profile:hover {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .page-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background: rgba(0, 240, 255, 0.15);
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+        }
+
+        .modal-business-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal .category-badge {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--neon-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .modal-info {
+            display: grid;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .modal-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .modal-info-item i {
+            color: var(--neon-cyan);
+            width: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--neon-cyan);
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-col a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .directory-content {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+            .page-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--glass-border);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .page-title {
+                font-size: 2.5rem;
+            }
+            .business-grid {
+                grid-template-columns: 1fr;
+            }
+            .search-container {
+                flex-direction: column;
+                border-radius: 20px;
+                padding: 1rem;
+            }
+            .search-btn {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            .stats-bar {
+                gap: 1.5rem;
+            }
+            .whatsapp-float {
+                right: 1.5rem;
+                bottom: 1.5rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="logo" onclick="navigateTo('home')">
+                <div class="logo-icon"><img src="aletech-logo.png" class=" logo-icon"></i></div>
+                <span class="logo-text">Ale Tech-solutions</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="navigateTo('home')">Home</a></li>
+                <li><a onclick="navigateTo('services')">Services</a></li>
+                <li><a class="active" onclick="navigateTo('directory')">Directory</a></li>
+                <li><a onclick="navigateTo('blog')">Blog</a></li>
+                <li><a onclick="navigateTo('about')">About</a></li>
+                <li><a onclick="navigateTo('contact')">Contact</a></li>
+                <li><a class="btn-nav btn-login" onclick="navigateTo('logout')">Logout</a></li>
+               
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <span class="page-badge"><i class="fas fa-building"></i> Business Directory</span>
+        <h1 class="page-title">Discover <span class="highlight">Businesses</span> in Malawi</h1>
+        <p class="page-description">Find trusted tech companies, service providers, and innovative startups across Malawi</p>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search businesses by name, category, or location...">
+            </div>
+            <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i> Search</button>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-value" id="totalBusinesses">500+</div>
+            <div class="stat-label">Listed Businesses</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">4.8</div>
+            <div class="stat-label">Avg Rating</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">50+</div>
+            <div class="stat-label">Cities</div>
+        </div>
+    </div>
+
+    <!-- Directory Content -->
+    <div class="directory-content">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="filter-card">
+                <h3><i class="fas fa-list"></i> Categories</h3>
+                <ul class="category-list" id="categoryList">
+                    <li class="active" data-category="all">All Categories <span class="category-count">48</span></li>
+                    <li data-category="tech">Technology <span class="category-count">15</span></li>
+                    <li data-category="design">Design & Creative <span class="category-count">8</span></li>
+                    <li data-category="marketing">Marketing <span class="category-count">7</span></li>
+                    <li data-category="finance">Finance <span class="category-count">5</span></li>
+                    <li data-category="health">Health Tech <span class="category-count">4</span></li>
+                    <li data-category="education">Education <span class="category-count">6</span></li>
+                    <li data-category="agriculture">Agriculture <span class="category-count">3</span></li>
+                </ul>
+            </div>
+
+            <div class="filter-card">
+                <h3><i class="fas fa-star"></i> Rating</h3>
+                <div class="rating-filter">
+                    <label class="rating-option">
+                        <input type="radio" name="rating" value="5" checked> 
+                        <span class="stars">★★★★★</span> 5 Stars
+                    </label>
+                    <label class="rating-option">
+                        <input type="radio" name="rating" value="4"> 
+                        <span class="stars">★★★★</span> & Up
+                    </label>
+                    <label class="rating-option">
+                        <input type="radio" name="rating" value="3"> 
+                        <span class="stars">★★★</span> & Up
+                    </label>
+                </div>
+            </div>
+
+            <a href="#" class="btn-list-business">
+                <i class="fas fa-plus-circle"></i> List Your Business
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="results-header">
+                <div class="results-count">Showing <span id="resultCount">48</span> businesses</div>
+                <select class="sort-select" id="sortSelect">
+                    <option value="recommended">Recommended</option>
+                    <option value="rating">Highest Rated</option>
+                    <option value="newest">Newest First</option>
+                    <option value="name">Name A-Z</option>
+                </select>
+            </div>
+
+            <div class="business-grid" id="businessGrid">
+                <!-- Business cards will be rendered by JavaScript -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Business Profile Modal -->
+    <div class="modal-overlay" id="businessModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            <div class="modal-business-logo tech" id="modalLogo"><i class="fas fa-building"></i></div>
+            <h2 id="modalName">Business Name</h2>
+            <span class="category-badge" id="modalCategory">Technology</span>
+            <div class="business-rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-num" id="modalRating">5.0</span>
+            </div>
+            <p style="color: var(--text-secondary);" id="modalDescription">Business description here.</p>
+            <div class="modal-info">
+                <div class="modal-info-item"><i class="fas fa-map-marker-alt"></i> <span id="modalLocation">Lilongwe</span></div>
+                <div class="modal-info-item"><i class="fas fa-phone"></i> <span id="modalPhone">+265990828040</span></div>
+                <div class="modal-info-item"><i class="fas fa-envelope"></i> <span id="modalEmail">info@business.com</span></div>
+                <div class="modal-info-item"><i class="fas fa-globe"></i> <span id="modalWebsite">www.business.com</span></div>
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                <a href="#" class="btn-contact btn-call" style="flex: 1; text-align: center;"><i class="fas fa-phone"></i> Call Now</a>
+                <a href="#" class="btn-contact btn-profile" style="flex: 1; text-align: center;">Visit Website</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Ale Tech-solutions</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Building Malawi's digital future, one connection at a time.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="#">Services</a>
+                <a href="#">Business Directory</a>
+                <a href="#">Blog</a>
+                <a href="#">About Us</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="#">Contact Us</a>
+                <a href="#">FAQ</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="#"><i class="fas fa-envelope"></i> hello@aletechsolutions.com</a>
+                <a href="#"><i class="fas fa-phone"></i> +265 990 828 040</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i> Lilongwe, Malawi</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Ale Tech-solutions. All rights reserved. Made with ❤️ in Malawi</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/265990828040" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+
+    <script>
+        // Sample business data
+        const businesses = [
+            { id: 1, name: "TechPro Malawi", category: "tech", logo: "tech", icon: "fa-laptop-code", rating: 4.9, reviews: 128, description: "Leading software development company specializing in web and mobile applications.", location: "Lilongwe", phone: "+265 990 828 940", email: "info@techpro.mw", website: "www.techpro.mw", featured: true, tags: ["Web Dev", "Mobile Apps", "Cloud"] },
+            { id: 2, name: "Creative Studio Mzuzu", category: "design", logo: "design", icon: "fa-paint-brush", rating: 4.7, reviews: 89, description: "Award-winning design agency offering branding, UI/UX, and graphic design services.", location: "Mzuzu", phone: "+265 990 828 94", email: "hello@creativestudio.mw", website: "www.creativestudio.mw", featured: true, tags: ["Branding", "UI/UX", "Graphic Design"] },
+            { id: 3, name: "Digital Marketing Hub", category: "marketing", logo: "marketing", icon: "fa-bullhorn", rating: 4.8, reviews: 156, description: "Full-service digital marketing agency helping businesses grow their online presence.", location: "Blantyre", phone: "+265 990 828 94", email: "info@dmhub.mw", website: "www.dmhub.mw", featured: false, tags: ["SEO", "Social Media", "Ads"] },
+            { id: 4, name: "FinTech Solutions MW", category: "finance", logo: "finance", icon: "fa-chart-pie", rating: 4.6, reviews: 72, description: "Innovative financial technology solutions for businesses and individuals.", location: "Lilongwe", phone: "+265 990 828 94", email: "info@fintechmw.com", website: "www.fintechmw.com", featured: true, tags: ["Payments", "Banking", "Finance"] },
+            { id: 5, name: "HealthTech Africa", category: "health", logo: "health", icon: "fa-heartbeat", rating: 4.9, reviews: 201, description: "Healthcare technology solutions improving patient care across Malawi.", location: "Blantyre", phone: "+265 990 828 94", email: "care@healthtech.mw", website: "www.healthtech.mw", featured: false, tags: ["Telemedicine", "Health Records", "EHR"] },
+            { id: 6, name: "EduLearn Malawi", category: "education", logo: "tech", icon: "fa-graduation-cap", rating: 4.7, reviews: 94, description: "E-learning platform providing quality tech education to students across Malawi.", location: "Zomba", phone: "+265 990 828 94", email: "info@edulearn.mw", website: "www.edulearn.mw", featured: true, tags: ["E-Learning", "Courses", "Training"] },
+            { id: 7, name: "AgriTech Innovations", category: "agriculture", logo: "tech", icon: "fa-seedling", rating: 4.5, reviews: 63, description: "Smart farming solutions using IoT and data analytics for modern agriculture.", location: "Lilongwe", phone: "+265 990 828 94", email: "info@agritech.mw", website: "www.agritech.mw", featured: false, tags: ["IoT", "Farming", "Data Analytics"] },
+            { id: 8, name: "CloudServe MW", category: "tech", logo: "tech", icon: "fa-cloud-upload-alt", rating: 4.8, reviews: 110, description: "Cloud hosting and infrastructure services for businesses of all sizes.", location: "Blantyre", phone: "+265 990 828 94", email: "sales@cloudserve.mw", website: "www.cloudserve.mw", featured: true, tags: ["Cloud", "Hosting", "DevOps"] },
+            { id: 9, name: "BrandCraft Design", category: "design", logo: "design", icon: "fa-pencil-ruler", rating: 4.6, reviews: 78, description: "Creative branding studio crafting unique visual identities for businesses.", location: "Lilongwe", phone: "+265 990 828 94", email: "hello@brandcraft.mw", website: "www.brandcraft.mw", featured: false, tags: ["Branding", "Logo Design", "Identity"] }
+        ];
+
+        let currentFilter = 'all';
+        let currentSort = 'recommended';
+
+        // Render businesses
+        function renderBusinesses(filter = 'all', sort = 'recommended') {
+            let filtered = [...businesses];
+            
+            // Apply category filter
+            if (filter !== 'all') {
+                filtered = filtered.filter(b => b.category === filter);
+            }
+            
+            // Apply sort
+            if (sort === 'rating') {
+                filtered.sort((a, b) => b.rating - a.rating);
+            } else if (sort === 'name') {
+                filtered.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (sort === 'newest') {
+                filtered.reverse();
+            }
+            // 'recommended' keeps original order (featured first)
+            if (sort === 'recommended') {
+                filtered.sort((a, b) => b.featured - a.featured);
+            }
+
+            const grid = document.getElementById('businessGrid');
+            const count = document.getElementById('resultCount');
+            
+            grid.innerHTML = filtered.map(b => `
+                <div class="business-card ${b.featured ? 'featured' : ''}" onclick="openBusinessModal(${b.id})">
+                    ${b.featured ? '<span class="featured-tag">Featured</span>' : ''}
+                    <div class="business-header">
+                        <div class="business-logo ${b.logo}">
+                            <i class="fas ${b.icon}"></i>
+                        </div>
+                        <div class="business-info">
+                            <h3>${b.name}</h3>
+                            <span class="business-category">${b.category}</span>
+                        </div>
+                    </div>
+                    <div class="business-rating">
+                        <span class="stars">${'★'.repeat(Math.floor(b.rating))}${b.rating % 1 >= 0.5 ? '½' : ''}</span>
+                        <span class="rating-num">${b.rating} (${b.reviews} reviews)</span>
+                    </div>
+                    <p class="business-description">${b.description}</p>
+                    <div class="business-tags">
+                        ${b.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                    </div>
+                    <div class="business-contact">
+                        <a href="tel:${b.phone}" class="btn-contact btn-call"><i class="fas fa-phone"></i> Call</a>
+                        <button class="btn-contact btn-profile" onclick="event.stopPropagation(); openBusinessModal(${b.id})"><i class="fas fa-eye"></i> Profile</button>
+                    </div>
+                </div>
+            `).join('');
+
+            count.textContent = filtered.length;
+            document.getElementById('totalBusinesses').textContent = filtered.length + '+';
+        }
+
+        // Open modal
+        function openBusinessModal(id) {
+            const b = businesses.find(biz => biz.id === id);
+            if (!b) return;
+            
+            document.getElementById('modalLogo').className = 'modal-business-logo ' + b.logo;
+            document.getElementById('modalLogo').innerHTML = `<i class="fas ${b.icon}"></i>`;
+            document.getElementById('modalName').textContent = b.name;
+            document.getElementById('modalCategory').textContent = b.category;
+            document.getElementById('modalRating').textContent = b.rating + ' (' + b.reviews + ' reviews)';
+            document.getElementById('modalDescription').textContent = b.description;
+            document.getElementById('modalLocation').textContent = b.location;
+            document.getElementById('modalPhone').textContent = b.phone;
+            document.getElementById('modalEmail').textContent = b.email;
+            document.getElementById('modalWebsite').textContent = b.website;
+            
+            document.getElementById('businessModal').classList.add('active');
+        }
+
+        // Close modal
+        document.getElementById('modalClose').addEventListener('click', () => {
+            document.getElementById('businessModal').classList.remove('active');
+        });
+        document.getElementById('businessModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('businessModal')) {
+                document.getElementById('businessModal').classList.remove('active');
+            }
+        });
+
+        // Category filter
+        document.getElementById('categoryList').addEventListener('click', (e) => {
+            const li = e.target.closest('li');
+            if (!li) return;
+            
+            document.querySelectorAll('#categoryList li').forEach(l => l.classList.remove('active'));
+            li.classList.add('active');
+            
+            currentFilter = li.dataset.category;
+            renderBusinesses(currentFilter, currentSort);
+        });
+
+        // Sort
+        document.getElementById('sortSelect').addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            renderBusinesses(currentFilter, currentSort);
+        });
+
+        // Search
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = businesses.filter(b => 
+                b.name.toLowerCase().includes(query) ||
+                b.category.toLowerCase().includes(query) ||
+                b.location.toLowerCase().includes(query) ||
+                b.tags.some(t => t.toLowerCase().includes(query))
+            );
+            
+            const grid = document.getElementById('businessGrid');
+            grid.innerHTML = filtered.map(b => `
+                <div class="business-card ${b.featured ? 'featured' : ''}" onclick="openBusinessModal(${b.id})">
+                    ${b.featured ? '<span class="featured-tag">Featured</span>' : ''}
+                    <div class="business-header">
+                        <div class="business-logo ${b.logo}"><i class="fas ${b.icon}"></i></div>
+                        <div class="business-info">
+                            <h3>${b.name}</h3>
+                            <span class="business-category">${b.category}</span>
+                        </div>
+                    </div>
+                    <div class="business-rating">
+                        <span class="stars">${'★'.repeat(Math.floor(b.rating))}</span>
+                        <span class="rating-num">${b.rating} (${b.reviews} reviews)</span>
+                    </div>
+                    <p class="business-description">${b.description}</p>
+                    <div class="business-tags">${b.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                    <div class="business-contact">
+                        <a href="tel:${b.phone}" class="btn-contact btn-call"><i class="fas fa-phone"></i> Call</a>
+                        <button class="btn-contact btn-profile" onclick="event.stopPropagation(); openBusinessModal(${b.id})"><i class="fas fa-eye"></i> Profile</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('resultCount').textContent = filtered.length;
+        });
+
+        // Mobile menu
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // Pagination buttons
+        document.querySelectorAll('.page-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+  // Navigation function
+        function navigateTo(page) {
+            const pages = {
+                'home': 'home.html',
+                'services': 'services.html',
+                'directory': 'directory.html',
+                'blog': 'blog.html',
+                'about': 'about.html',
+                'contact': 'contact.html',
+                'logout': 'index.html'
+            };
+            
+            if (pages[page]) {
+                window.location.href = pages[page];
+            }
+        }
+        
+        // Initial render
+        renderBusinesses();
+        
+        console.log('📂 Ale Tech-solutions Business Directory Loaded!');
+    </script>
+</body>
+</html>

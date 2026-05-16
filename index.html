@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register - Ale Tech-solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --glass-bg: rgba(18, 18, 30, 0.7);
+            --glass-border: rgba(0, 255, 255, 0.15);
+            --neon-cyan: #00f0ff;
+            --neon-purple: #b44dff;
+            --neon-pink: #ff2d95;
+            --neon-green: #39ff14;
+            --neon-orange: #ff6b35;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0b0;
+            --text-dim: #6a6a7a;
+            --gradient-1: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0d0d18 100%);
+            --gradient-2: linear-gradient(135deg, #00f0ff20, #b44dff20);
+            --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2);
+            --glow-purple: 0 0 20px rgba(180, 77, 255, 0.4), 0 0 40px rgba(180, 77, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: linear-gradient(rgba(0, 240, 255, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.5) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: floatUp 8s infinite;
+            opacity: 0;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .particle:nth-child(even) { background: var(--neon-purple); box-shadow: var(--glow-purple); }
+        .particle:nth-child(3n) { background: var(--neon-pink); box-shadow: 0 0 15px rgba(255, 45, 149, 0.4); }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            cursor: pointer;
+        }
+
+        img{
+            width: 90px;
+            height: 90px;
+            margin-left: -30px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--neon-cyan);
+            animation: logoPulse 3s infinite;
+        }
+
+        @keyframes logoPul {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(0, 240, 255, 0.7); }
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-cyan);
+            transition: width 0.3s ease;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--neon-cyan);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .btn-back {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            cursor: pointer;
+            background: transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-back:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Auth Container */
+        .auth-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 480px;
+            padding: 0 1.5rem;
+            margin-top: 27rem;
+        }
+
+        .auth-container{
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top:-50% ;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 240, 255, 0.05), transparent, rgba(180, 77, 255, 0.05), transparent);
+            animation: rotate 10s linear infinite;
+            pointer-events: none;
+           
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-icon{
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: var(--gradient-2);
+            border: 2px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--neon-cyan);
+            margin: 0 auto 1.5rem;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .auth-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Tab Switcher */
+        .tab-switcher {
+            display: flex;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 0.4rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 240, 255, 0.15);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Form Styles */
+        .auth-form{
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 1rem 1.2rem 1rem 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+        }
+
+        .input-wrapper input:focus + i,
+        .input-wrapper input:focus ~ i {
+            color: var(--neon-cyan);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--neon-cyan);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            accent-color: var(--neon-cyan);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--neon-cyan), #0099ff);
+            color: #000;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 0 45px rgba(0, 240, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        .btn-submit.register-btn {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            box-shadow: 0 0 25px rgba(180, 77, 255, 0.3);
+        }
+
+        .btn-submit.register-btn:hover {
+            box-shadow: 0 0 45px rgba(255, 45, 149, 0.5);
+        }
+
+        /* Social Login */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-social {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        .btn-social:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-social.google:hover { border-color: #ea4335; box-shadow: 0 0 20px rgba(234, 67, 53, 0.2); }
+        .btn-social.github:hover { border-color: #6e5494; box-shadow: 0 0 20px rgba(110, 84, 148, 0.2); }
+
+        /* Terms Checkbox */
+        .terms-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .terms-check input[type="checkbox"] {
+            accent-color: var(--neon-purple);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .terms-check a {
+            color: var(--neon-purple);
+            text-decoration: none;
+        }
+
+        .terms-check a:hover {
+            text-decoration: underline;
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 3000;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            font-weight: 600;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+            animation: slideInRight 0.3s ease, slideOutRight 0.3s ease 2.7s forwards;
+            pointer-events: none;
+        }
+
+        .toast.success {
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        .toast.error {
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+        }
+
+        .toast.info {
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Footer */
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .auth-footer a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--glass-border);
+                z-index: 999;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .auth-container {
+                padding: 2rem 1.5rem;
+            }
+            .auth-header h2 {
+                font-size: 1.6rem;
+            }
+            .social-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="logo" onclick="navigateTo('home')">
+                <div class="logo-icon"><img src="aletech-logo.png" class="logo-icon"></div>
+                <span class="logo-text">Ale Tech-solutions</span>
+            </div>
+            
+            
+            
+        </div>
+    </nav>
+
+    <!-- Auth Container -->
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <!-- Tab Switcher -->
+            <div class="tab-switcher">
+                <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+                <button class="tab-btn" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="auth-header">
+                    <div class="auth-icon"><i class="fas fa-sign-in-alt"></i></div>
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to access your account</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe"> Remember me
+                    </label>
+                    <a class="forgot-password" onclick="handleForgotPassword()">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+
+                <div class="divider"><span>or continue with</span></div>
+
+                <div class="social-buttons">
+                    <button type="button" class="btn-social google" onclick="handleSocialLogin('Google')">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="btn-social github" onclick="handleSocialLogin('GitHub')">
+                        <i class="fab fa-github"></i> GitHub
+                    </button>
+                </div>
+            </form>
+
+            <!-- Register Form -->
+            <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+                <div class="auth-header">
+                    <div class="auth-icon"><i class="fas fa-user-plus"></i></div>
+                    <h2>Create Account</h2>
+                    <p>Join Ale Tech-solutions today</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="regName" placeholder="Enter your full name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="regEmail" placeholder="Enter your email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="regPhone" placeholder="+265 888 000 000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="regPassword" placeholder="Create a password (min. 8 characters)" required minlength="8">
+                        <button type="button" class="password-toggle" onclick="togglePassword('regPassword', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="regConfirmPassword" placeholder="Confirm your password" required minlength="8">
+                        <button type="button" class="password-toggle" onclick="togglePassword('regConfirmPassword', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="terms-check">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                </div>
+
+                <button type="submit" class="btn-submit register-btn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+
+                <div class="divider"><span>or sign up with</span></div>
+
+                <div class="social-buttons">
+                    <button type="button" class="btn-social google" onclick="handleSocialLogin('Google')">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="btn-social github" onclick="handleSocialLogin('GitHub')">
+                        <i class="fab fa-github"></i> GitHub
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <p class="auth-footer">
+            By continuing, you agree to Ale Tech-solutions <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </p>
+    </div>
+
+    <script>
+        // Navigation function
+        function navigateTo(page) {
+            const pages = {
+                'home': 'home.html',
+                'services': 'services.html',
+                'directory': 'directory.html',
+                'blog': 'blog.html',
+                'about': 'about.html',
+                'contact': 'contact.html',
+                'login': 'index.html'
+            };
+            if (pages[page]) window.location.href = pages[page];
+        }
+
+        // Toast notification
+        function showToast(message, type = 'info') {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Tab switching
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const forms = document.querySelectorAll('.auth-form');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                tabs[0].classList.add('active');
+                forms[0].classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                forms[1].classList.add('active');
+            }
+        }
+
+        // Toggle password visibility
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            const icon = button.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Handle login
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            if (!email || !password) {
+                showToast('❌ Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                showToast('❌ Please enter a valid email address', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showToast('❌ Password must be at least 6 characters', 'error');
+                return;
+            }
+            
+            // Simulate login
+            const submitBtn = document.querySelector('#loginForm .btn-submit');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                showToast('✅ Login successful! Redirecting...', 'success');
+                submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                submitBtn.disabled = false;
+                
+                // Store user info if remember me is checked
+                if (rememberMe) {
+                    localStorage.setItem('aleTechUser', JSON.stringify({ email, name: email.split('@')[0] }));
+                }
+                
+                setTimeout(() => navigateTo('home'), 1500);
+            }, 1500);
+        }
+
+        // Handle register
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            
+            if (!name || !email || !password || !confirmPassword) {
+                showToast('❌ Please fill in all required fields', 'error');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                showToast('❌ Please enter a valid email address', 'error');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showToast('❌ Password must be at least 8 characters', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showToast('❌ Passwords do not match', 'error');
+                return;
+            }
+            
+            if (!agreeTerms) {
+                showToast('❌ Please agree to the Terms of Service', 'error');
+                return;
+            }
+            
+            // Simulate registration
+            const submitBtn = document.querySelector('#registerForm .btn-submit');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                showToast('🎉 Account created successfully! Welcome aboard!', 'success');
+                submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+                submitBtn.disabled = false;
+                
+                // Store user info
+                localStorage.setItem('aleTechUser', JSON.stringify({ name, email, phone }));
+                
+                // Switch to login after successful registration
+                setTimeout(() => {
+                    switchTab('login');
+                    document.getElementById('loginEmail').value = email;
+                }, 1500);
+            }, 1500);
+        }
+
+        // Handle forgot password
+        function handleForgotPassword() {
+            const email = document.getElementById('loginEmail').value.trim();
+            
+            if (!email) {
+                showToast('📧 Please enter your email address first', 'info');
+                document.getElementById('loginEmail').focus();
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                showToast('❌ Please enter a valid email address', 'error');
+                return;
+            }
+            
+            showToast('📧 Password reset link sent to ' + email, 'success');
+        }
+
+        // Handle social login
+        function handleSocialLogin(provider) {
+            showToast(`🔐 Connecting with ${provider}...`, 'info');
+            
+            setTimeout(() => {
+                showToast(`✅ ${provider} authentication successful! Redirecting...`, 'success');
+                setTimeout(() => navigateTo('home'), 1500);
+            }, 1500);
+        }
+
+        // Mobile menu
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Generate particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 25; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 6 + 6) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Check if user is already logged in
+        const savedUser = localStorage.getItem('aleTechUser');
+        if (savedUser) {
+            const user = JSON.parse(savedUser);
+            document.getElementById('loginEmail').value = user.email || '';
+        }
+
+        console.log('🔐 Ale Tech-solutions Login/Register Page Loaded!');
+        console.log('📋 Features: Login | Register | Forgot Password | Social Auth | Password Toggle');
+    </script>
+</body>
+</html>

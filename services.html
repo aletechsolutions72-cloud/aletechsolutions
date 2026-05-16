@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Ale Tech-solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --glass-bg: rgba(18, 18, 30, 0.7);
+            --glass-border: rgba(0, 255, 255, 0.15);
+            --neon-cyan: #00f0ff;
+            --neon-purple: #b44dff;
+            --neon-pink: #ff2d95;
+            --neon-green: #39ff14;
+            --neon-orange: #ff6b35;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0b0;
+            --text-dim: #6a6a7a;
+            --gradient-1: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0d0d18 100%);
+            --gradient-2: linear-gradient(135deg, #00f0ff20, #b44dff20);
+            --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2);
+            --glow-purple: 0 0 20px rgba(180, 77, 255, 0.4), 0 0 40px rgba(180, 77, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image:
+                linear-gradient(rgba(0, 240, 255, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.5) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+       img{
+            width: 90px;
+            height: 90px;
+            margin-left: -30px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--neon-cyan);
+            animation: logoPulse 3s infinite;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-cyan);
+            transition: width 0.3s ease;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--neon-cyan);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .btn-nav {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-login {
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .btn-login:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            color: white;
+            margin-left: 0.5rem;
+            box-shadow: 0 0 20px rgba(180, 77, 255, 0.3);
+        }
+
+        .btn-register:hover {
+            box-shadow: 0 0 35px rgba(255, 45, 149, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .page-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-title .highlight {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Service Categories */
+        .service-categories {
+            padding: 2rem 2rem 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .categories-filter {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.8rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Services Grid */
+        .services-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(0, 240, 255, 0.08) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 240, 255, 0.1);
+        }
+
+        .service-card.featured {
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 30px rgba(180, 77, 255, 0.15);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.4rem 1rem;
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink));
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-icon.cyan { background: rgba(0, 240, 255, 0.15); color: var(--neon-cyan); }
+        .service-icon.purple { background: rgba(180, 77, 255, 0.15); color: var(--neon-purple); }
+        .service-icon.pink { background: rgba(255, 45, 149, 0.15); color: var(--neon-pink); }
+        .service-icon.green { background: rgba(57, 255, 20, 0.15); color: var(--neon-green); }
+        .service-icon.orange { background: rgba(255, 107, 53, 0.15); color: var(--neon-orange); }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            line-height: 1.7;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-features li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .service-features li i {
+            color: var(--neon-green);
+            font-size: 0.8rem;
+        }
+
+        .service-price {
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .price-period {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .btn-service {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, var(--neon-cyan), #0099ff);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+        }
+
+        .btn-service:hover {
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 6rem 2rem;
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 240, 255, 0.02);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--neon-purple);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .process-steps {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 2px solid var(--neon-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 auto 1.5rem;
+            color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .process-step:hover .step-number {
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        .process-step h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-step p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--neon-cyan), transparent, var(--neon-purple), transparent);
+            animation: rotate 6s linear infinite;
+            opacity: 0.1;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .cta-card h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-card p {
+            color: var(--text-secondary);
+            margin: 1rem 0 2rem;
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--neon-cyan);
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-col a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .page-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--glass-border);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .whatsapp-float {
+                right: 1.5rem;
+                bottom: 1.5rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Grid -->
+    <div class="bg-grid"></div>
+
+  <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="logo" onclick="navigateTo('home')">
+                <div class="logo-icon"><i class="fas fa-microchip"></i></div>
+                <span class="logo-text">Ale Tech-solutions</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="navigateTo('home')">Home</a></li>
+                <li><a class="active" onclick="navigateTo('services')">Services</a></li>
+                <li><a onclick="navigateTo('directory')">Directory</a></li>
+                <li><a onclick="navigateTo('blog')">Blog</a></li>
+                <li><a onclick="navigateTo('about')">About</a></li>
+                <li><a onclick="navigateTo('contact')">Contact</a></li>
+                <li><a class="btn-nav btn-login" onclick="navigateTo('logout')">Logout</a></li>
+               
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+    
+    <!-- Page Header -->
+    <section class="page-header">
+        <span class="page-badge">
+            <i class="fas fa-cogs"></i> Our Services
+        </span>
+        <h1 class="page-title">
+            Tech Solutions for <span class="highlight">Every Need</span>
+        </h1>
+        <p class="page-description">
+            From web development to digital marketing, we offer comprehensive tech services 
+            to help your business thrive in the digital age.
+        </p>
+    </section>
+
+    <!-- Service Categories Filter -->
+    <section class="service-categories">
+        <div class="categories-filter">
+            <button class="filter-btn active" data-filter="all">All Services</button>
+            <button class="filter-btn" data-filter="development">Development</button>
+            <button class="filter-btn" data-filter="design">Design</button>
+            <button class="filter-btn" data-filter="marketing">Marketing</button>
+            <button class="filter-btn" data-filter="consulting">Consulting</button>
+            <button class="filter-btn" data-filter="support">Support</button>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="services-grid">
+            <!-- Web Development -->
+            <div class="service-card featured" data-category="development">
+                <span class="featured-badge">Popular</span>
+                <div class="service-icon cyan">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Web Development</h3>
+                <p>Custom websites and web applications built with the latest technologies for optimal performance.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Responsive Design</li>
+                    <li><i class="fas fa-check-circle"></i> SEO Optimization</li>
+                    <li><i class="fas fa-check-circle"></i> E-commerce Solutions</li>
+                    <li><i class="fas fa-check-circle"></i> CMS Integration</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price-amount">From MK450,000</span>
+                </div>
+                <a href="#" class="btn-service">Get Started</a>
+            </div>
+
+            <!-- Mobile App Development -->
+            <div class="service-card" data-category="development">
+                <div class="service-icon purple">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Mobile App Development</h3>
+                <p>Native and cross-platform mobile applications for iOS and Android devices.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> iOS & Android</li>
+                    <li><i class="fas fa-check-circle"></i> UI/UX Design</li>
+                    <li><i class="fas fa-check-circle"></i> API Integration</li>
+                    <li><i class="fas fa-check-circle"></i> App Store Deployment</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price-amount">From MK600,000</span>
+                </div>
+                <a href="#" class="btn-service btn-outline">Learn More</a>
+            </div>
+
+            <!-- UI/UX Design -->
+            <div class="service-card featured" data-category="design">
+                <span class="featured-badge">New</span>
+                <div class="service-icon pink">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3>UI/UX Design</h3>
+                <p>Beautiful and intuitive user interfaces designed to engage and convert your visitors.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Wireframing</li>
+                    <li><i class="fas fa-check-circle"></i> Prototyping</li>
+                    <li><i class="fas fa-check-circle"></i> User Research</li>
+                    <li><i class="fas fa-check-circle"></i> Design Systems</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price-amount">From MK300,000</span>
+                </div>
+                <a href="#" class="btn-service">Get Started</a>
+            </div>
+
+            <!-- Digital Marketing -->
+            <div class="service-card" data-category="marketing">
+                <div class="service-icon green">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Digital Marketing</h3>
+                <p>Comprehensive digital marketing strategies to grow your online presence and reach.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Social Media Management</li>
+                    <li><i class="fas fa-check-circle"></i> Google Ads</li>
+                    <li><i class="fas fa-check-circle"></i> Email Marketing</li>
+                    <li><i class="fas fa-check-circle"></i> Analytics & Reporting</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price-amount">From MK200,000</span>
+                    <span class="price-period">/month</span>
+                </div>
+                <a href="#" class="btn-service btn-outline">Learn More</a>
+            </div>
+
+            <!-- Business Consulting -->
+            <div class="service-card" data-category="consulting">
+                <div class="service-icon orange">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h3>Business Consulting</h3>
+                <p>Expert advice to help you make strategic technology decisions for your business growth.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Tech Strategy</li>
+                    <li><i class="fas fa-check-circle"></i> Digital Transformation</li>
+                    <li><i class="fas fa-check-circle"></i> Process Optimization</li>
+                    <li><i class="fas fa-check-circle"></i> Risk Assessment</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price-amount">From MK150,000</span>
+                    <span class="price-period">/session</span>
+                </div>
+                <a href="#" class="btn-service">Book Now</a>
+            </div>
+
+            <!-- Tech Support -->
+            <div class="service-card" data-category="support">
+                <div class="service-icon cyan">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>24/7 Tech Support</h3>
+                <p>Round-the-clock technical support to keep your systems running smoothly and securely.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Remote Assistance</li>
+                    <li><i class="fas fa-check-circle"></i> System Maintenance</li>
+                    <li><i class="fas fa-check-circle"></i> Security Updates</li>
+                    <li><i class="fas fa-check-circle"></i> Emergency Response</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price-amount">From MK100,000</span>
+                    <span class="price-period">/month</span>
+                </div>
+                <a href="#" class="btn-service btn-outline">Subscribe</a>
+            </div>
+
+            <!-- Cloud Services -->
+            <div class="service-card" data-category="development">
+                <div class="service-icon purple">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3>Cloud Services</h3>
+                <p>Scalable cloud infrastructure and migration services for modern businesses.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Cloud Migration</li>
+                    <li><i class="fas fa-check-circle"></i> AWS/Azure/GCP</li>
+                    <li><i class="fas fa-check-circle"></i> DevOps Setup</li>
+                    <li><i class="fas fa-check-circle"></i> Cost Optimization</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price-amount">Custom Quote</span>
+                </div>
+                <a href="#" class="btn-service btn-outline">Contact Us</a>
+            </div>
+
+            <!-- Branding & Identity -->
+            <div class="service-card" data-category="design">
+                <div class="service-icon pink">
+                    <i class="fas fa-fingerprint"></i>
+                </div>
+                <h3>Branding & Identity</h3>
+                <p>Create a memorable brand identity that resonates with your target audience.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Logo Design</li>
+                    <li><i class="fas fa-check-circle"></i> Brand Guidelines</li>
+                    <li><i class="fas fa-check-circle"></i> Visual Identity</li>
+                    <li><i class="fas fa-check-circle"></i> Brand Strategy</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price-amount">From MK250,000</span>
+                </div>
+                <a href="#" class="btn-service">Get Started</a>
+            </div>
+
+            <!-- SEO Services -->
+            <div class="service-card" data-category="marketing">
+                <div class="service-icon green">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>SEO Optimization</h3>
+                <p>Improve your search engine rankings and drive organic traffic to your website.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check-circle"></i> Keyword Research</li>
+                    <li><i class="fas fa-check-circle"></i> On-Page SEO</li>
+                    <li><i class="fas fa-check-circle"></i> Link Building</li>
+                    <li><i class="fas fa-check-circle"></i> Performance Tracking</li>
+                </ul>
+                <div class="service-price">
+                    <span class="price-amount">From MK180,000</span>
+                    <span class="price-period">/month</span>
+                </div>
+                <a href="#" class="btn-service btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="section-header">
+            <span class="section-tag">How We Work</span>
+            <h2 class="section-title">Our Simple Process</h2>
+            <p class="section-subtitle">We follow a streamlined approach to deliver exceptional results</p>
+        </div>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h4>Consultation</h4>
+                <p>We discuss your needs and goals to understand your vision</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h4>Strategy</h4>
+                <p>We create a tailored plan with clear milestones</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h4>Development</h4>
+                <p>Our team brings your project to life with cutting-edge tech</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h4>Launch</h4>
+                <p>We deploy, test, and ensure everything runs perfectly</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-card">
+            <h2>Need a Custom Solution?</h2>
+            <p>Let's discuss your project and create something amazing together.</p>
+            <a href="#" class="btn-service" style="padding: 1rem 2.5rem; font-size: 1.1rem;">
+                <i class="fas fa-paper-plane"></i> Request a Quote
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Ale Tech-solutions</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Building Malawi's digital future, one connection at a time.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <a href="#">Web Development</a>
+                <a href="#">Mobile Apps</a>
+                <a href="#">UI/UX Design</a>
+                <a href="#">Digital Marketing</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="#">Contact Us</a>
+                <a href="#">FAQ</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="#"><i class="fas fa-envelope"></i> hello@aletechsolutions.com</a>
+                <a href="#"><i class="fas fa-phone"></i> +265 990 828 040</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i> Lilongwe, Malawi</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Ale Tech-solutions. All rights reserved. Made with ❤️ in Malawi</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/265990828040" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Service filtering
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const serviceCards = document.querySelectorAll('.service-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Filter cards
+                const filter = btn.getAttribute('data-filter');
+                serviceCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeInUp 0.5s ease';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Mouse tracking glow effect on cards
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', x + '%');
+                card.style.setProperty('--mouse-y', y + '%');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                navLinks.classList.remove('active');
+            });
+        });
+
+        console.log('🚀 Ale Tech-solutions Services Page Loaded!');
+    </script>
+</body>
+</html>
